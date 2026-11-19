@@ -1,0 +1,24 @@
+node_modules/
+frontend/node_modules/
+cloudflare/node_modules/
+frontend/static/vendor/
+frontend/.build/
+public/
+frontend/static/assets/
+.runtime/
+.deploy/
+.wrangler/
+**/wrangler.jsonc
+**/wrangler.local.*
+**/wrangler.production.*
+**/package-lock.json
+preview-*.png
+
+# Wrangler generates runtime definitions in its own canonical format.
+cloudflare/generated-env.d.ts
+
+# 公式素材の原本と、生成スクリプトから再現する図版は書式変換しません。
+/docs/architecture-atlas/assets/
+/docs/architecture-atlas/figures/*.svg
+/docs/architecture-atlas/atlas-print.html
+/docs/architecture-atlas/layout-check.json

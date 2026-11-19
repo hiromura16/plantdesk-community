@@ -1,0 +1,22 @@
+<!doctype html>
+<!-- 管理画面の入口。APIクライアントを先に読み込み、React部品と起動処理を接続します。 -->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#122c31" />
+    <title>PlantDesk — 施設管理ワークスペース</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="product.css" />
+    <link rel="stylesheet" href="task-workspace.css" />
+    <script type="module" src="/vendor/plantdesk-console.js"></script>
+  </head>
+  <body>
+    <div id="console-root">
+      <main class="product-loading">
+        <h1>PlantDesk</h1>
+        <p>ワークスペースを開いています…</p>
+      </main>
+    </div>
+  </body>
+</html>

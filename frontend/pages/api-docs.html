@@ -1,0 +1,45 @@
+<!doctype html>
+<!-- API仕様の閲覧画面。静的な仕様表示と、認証が必要な実行要求を分けて扱います。 -->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>PlantDesk API / WebMCP</title>
+    <link rel="stylesheet" href="/vendor/swagger-ui.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #fafcf9;
+      }
+      header {
+        padding: 20px 30px;
+        background: #122c31;
+        color: #fff;
+        font-family: sans-serif;
+      }
+      header a {
+        color: #a9d9c4;
+        margin-right: 22px;
+      }
+      header p {
+        font-size: 13px;
+        color: #c3d4c9;
+        line-height: 1.7;
+      }
+      .swagger-ui .topbar {
+        display: none;
+      }
+    </style>
+    <script type="module" src="/vendor/plantdesk-api-docs.js"></script>
+  </head>
+  <body>
+    <header>
+      <a href="/">← 敷地マップ</a><b id="webmcp">API / WebMCP</b>
+      <p>
+        すべてのAPIはサーバーのログインが必要です。閲覧モードは工事・お知らせ・付箋・公開図面だけを返します。設備・点検・タスクと更新操作には施設担当モードが必要です。<br />WebMCP対応ブラウザーでマップ画面を開くと、工事・設備・プロパティ・点検・一括操作のツールが登録されます。通常のブラウザーでもUI・REST
+        APIを利用できます。
+      </p>
+    </header>
+    <div id="swagger-ui"></div>
+  </body>
+</html>

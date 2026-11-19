@@ -1,0 +1,53 @@
+{
+  "name": "plantdesk-community",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Free機能をセルフホストするPlantDesk Community Edition",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings 0",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run check:generated && node scripts/check-docs.mjs && npm run check:syntax && npm run check:public",
+    "build": "npm run build --prefix frontend && node scripts/build.mjs",
+    "test": "npm test --prefix cloudflare && node tests/record-migration.mjs && node tests/preferences.mjs && node tests/csv.mjs && node tests/public-source.mjs && node --test tests/self-host.test.mjs",
+    "test:runtime": "node tests/worker-auth-runtime.mjs && node tests/notion-connector-runtime.mjs && node tests/records-runtime.mjs",
+    "test:ui": "python3 tests/community_ui.py && python3 tests/task_workspace_ui.py && python3 tests/team_operations_ui.py && python3 tests/workflow_ui.py",
+    "screenshots": "python3 scripts/capture-screenshots.py",
+    "dev": "node scripts/dev-server.mjs",
+    "dev:worker": "npm run dev --prefix cloudflare",
+    "check:syntax": "node scripts/check-syntax.mjs",
+    "check:public": "node scripts/check-public-source.mjs",
+    "generate": "node scripts/generate-api-types.mjs && node scripts/generate-api-routes.mjs && node scripts/generate-dom-types.mjs",
+    "check:generated": "node scripts/generate-api-types.mjs --check && node scripts/generate-api-routes.mjs --check && node scripts/generate-dom-types.mjs --check",
+    "typecheck": "tsc -p tsconfig.frontend.json && tsc -p tsconfig.worker.json",
+    "test:accessibility": "python3 tests/accessibility_ui.py",
+    "test:load": "node tests/load.mjs",
+    "audit:dependencies": "npm audit --audit-level=low && npm audit --prefix frontend --audit-level=low && npm audit --prefix cloudflare --audit-level=low",
+    "start": "node server/main.mjs"
+  },
+  "devDependencies": {
+    "@apidevtools/swagger-parser": "13.1.0",
+    "@eslint/js": "10.0.1",
+    "@types/leaflet": "1.9.22",
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "axe-core": "4.14.0",
+    "eslint": "10.15.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.14.0",
+    "openapi-typescript": "7.13.0",
+    "prettier": "3.10.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.2"
+  },
+  "overrides": {
+    "minimatch": "11.0.8"
+  }
+}

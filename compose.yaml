@@ -1,0 +1,19 @@
+services:
+  plantdesk:
+    build: .
+    ports:
+      - '127.0.0.1:18018:18018'
+    environment:
+      PLANTDESK_PASSWORD_FILE: /run/secrets/plantdesk_password
+    secrets:
+      - plantdesk_password
+    volumes:
+      - plantdesk_data:/data
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+secrets:
+  plantdesk_password:
+    file: ./secrets/password.txt
+volumes:
+  plantdesk_data:

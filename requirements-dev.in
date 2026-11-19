@@ -1,0 +1,4 @@
+# 開発・画面検証・依存監査。requirements-dev.txtはハッシュ付きの固定解決結果です。
+playwright==1.65.1
+ruff==0.17.5
+pip-audit==2.10.1

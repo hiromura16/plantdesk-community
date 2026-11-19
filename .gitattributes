@@ -1,0 +1,5 @@
+*.pdf binary
+*.png binary
+*.wasm binary
+frontend/static/vendor/** -whitespace
+public/vendor/** -whitespace

@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "types": []
+  },
+  "include": [
+    "cloudflare/**/*.mjs",
+    "cloudflare/types.ts",
+    "cloudflare/generated-env.d.ts",
+    "connectors/notion/*.mjs",
+    "shared/*.js",
+    "shared/*.ts"
+  ],
+  "exclude": ["cloudflare/dist", "cloudflare/tests"]
+}

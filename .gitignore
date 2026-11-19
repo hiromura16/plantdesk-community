@@ -1,0 +1,46 @@
+__pycache__/
+.venv/
+preview-*.png
+.runtime/
+*.log
+
+frontend/node_modules/
+
+.env*
+!.env.example
+.dev.vars*
+# 実環境の設定は手元だけに保持し、公開用の設定例から分離します。
+wrangler.json
+wrangler.jsonc
+wrangler.toml
+wrangler.*.json
+wrangler.*.jsonc
+wrangler.*.toml
+!wrangler.example.jsonc
+*.pem
+*.key
+*.p12
+*.pfx
+*.tfstate*
+.wrangler/
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.sql.gz
+node_modules/
+cloudflare/dist/
+.deploy/
+
+# Build output. Recreate with npm run build.
+/public/
+/frontend/.build/
+
+# 図版の再生成時に作る中間HTMLと配置検査結果。
+/docs/architecture-atlas/atlas-print.html
+/docs/architecture-atlas/layout-check.json
+
+/secrets/
+/data/
+*.sqlite-wal
+*.sqlite-shm

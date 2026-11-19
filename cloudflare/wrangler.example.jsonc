@@ -1,0 +1,31 @@
+// 公開用の設定例です。コピー先の wrangler.jsonc はGit管理外で使います。
+// 実際のDB・Access・公開URLは、コピー先だけに記入してください。
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "plantdesk-example",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-13",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [],
+  "triggers": { "crons": [] },
+  "observability": { "enabled": true, "traces": { "enabled": true } },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "plantdesk-example",
+      "database_id": "00000000-0000-4000-8000-000000000000",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "vars": {
+    "APP_ORIGIN": "https://plantdesk.example.com",
+    "ACCESS_TEAM": "https://access.example.com",
+    "ACCESS_AUD": "REPLACE_WITH_ACCESS_AUDIENCE",
+  },
+  "assets": {
+    "directory": "../public",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+  },
+}

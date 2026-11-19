@@ -1,0 +1,12 @@
+.git
+node_modules
+**/node_modules
+.runtime
+.deploy
+public
+frontend/.build
+cloudflare/dist
+.env*
+.dev.vars*
+secrets
+*.sqlite*
