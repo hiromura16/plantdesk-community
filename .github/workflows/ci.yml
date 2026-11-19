@@ -1,0 +1,89 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        node: ['22', '26']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            frontend/package-lock.json
+            cloudflare/package-lock.json
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Install locked dependencies
+        run: |
+          npm ci
+          npm ci --prefix frontend
+          npm ci --prefix cloudflare
+          pip install -r requirements-dev.txt
+      - name: Formatting, lint, types and generated contracts
+        run: npm run check
+      - name: Python checks
+        run: ruff check . && ruff format --check . && python -m compileall -q tests scripts
+      - name: API coverage and database migration
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: Workers and D1 runtime
+        run: npm run test:runtime
+      - name: Dependency audits
+        if: matrix.node == '26'
+        run: |
+          npm run audit:dependencies
+          pip-audit -r requirements-dev.txt --format json -o .runtime/qa/python-audit.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: api-evidence-node-${{ matrix.node }}
+          path: .runtime/qa/
+          include-hidden-files: true
+          retention-days: 14
+  browser:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '26'
+          cache: npm
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Install application and browser
+        run: |
+          npm ci
+          npm ci --prefix frontend
+          npm run build
+          pip install -r requirements-dev.txt
+          python -m playwright install --with-deps chromium
+      - name: Task, equipment and drawing workflows
+        run: npm run test:ui
+      - name: Accessibility and keyboard
+        run: npm run test:accessibility
+      - name: Local HTTP performance
+        run: npm run test:load
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: browser-evidence
+          path: .runtime/qa/
+          include-hidden-files: true
+          retention-days: 14
